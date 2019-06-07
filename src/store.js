@@ -38,5 +38,15 @@ export default new Vuex.Store({
         dispatch('getBugs')
       } catch (e) { console.error(e) }
     },
+
+    async getBugById({ commit, dispatch }, id) {
+      let res = await _api.get('bugs/' + id)
+      console.log(res)
+      commit('setBug', res.data.results)
+    },
   }
 })
+
+// async getGameById({ commit, dispatch }, id) {
+//   let res = await _api.get('games/' + id)
+//   commit('setGame', res.data)

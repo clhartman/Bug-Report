@@ -15,9 +15,10 @@
           <td>{{bug.title}}</td>
           <td>{{bug.description}}</td>
           <td>{{new Date(bug.createdAt).toLocaleDateString()}}</td>
-          <td><button type="button" class="btn btn-primary" @click="selectBug(bug._id)">Bug Details</button></td>
-          <td v-if="bug.closed == false">Alive</td>
-          <td v-if="bug.closed !== false">Exterminated</td>
+          <td>
+            <router-link class="btn btn-primary" :to="{ name: 'bug', params: {id: bug._id}}">Bug Details</router-link>
+          </td>
+          <td>{{bug.closed ? 'Exterminated' : 'Alive'}}</td>
         </tr>
       </tbody>
     </table>
@@ -39,7 +40,9 @@
     },
 
     methods: {
+      selectBug(id) {
 
+      }
     },
   }
 
