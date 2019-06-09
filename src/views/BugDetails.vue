@@ -14,23 +14,27 @@
         Created {{new Date(bug.createdAt).toLocaleDateString()}} by {{bug.creator}}
       </div>
     </div>
-    <form @submit.prevent="makeNote" class="new-form">
+    <form @submit.prevent="makeNote" class="note-form">
       <input type="text" placeholder="Author" v-model="newNote.creator" name="creator">
       <input type="text" placeholder="Update" v-model="newNote.content" name="content">
       <input type="text" placeholder="Status" v-model="newNote.flagged">
       <button type="submit">Submit</button>
     </form>
+    <notes />
 
   </div>
 </template>
 
 <script>
+
+  import Notes from '@/components/Notes.vue'
+
   export default {
     name: "BugDetails",
     props: ["id"],
     mounted() {
       this.$store.dispatch('getBugById', this.id);
-      // this.$store.dispatch('getNote', this.id);
+      this.$store.dispatch('getNotes', this.id);
     },
     data() {
       return {
@@ -45,7 +49,10 @@
     computed: {
       bug() {
         return this.$store.state.bug
-      }
+      },
+      // notes() {
+      //   return this.$store.state.notes
+      // }
     },
     methods: {
       async makeNote() {
@@ -53,7 +60,7 @@
       },
     },
     components: {
-
+      Notes,
     }
   }
 </script>

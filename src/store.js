@@ -24,10 +24,10 @@ export default new Vuex.Store({
     setBug(state, data) {
       state.bug = data
     },
-    getNotes(state, data) {
+    setNotes(state, data) {
       state.notes = data
     },
-    getNote(state, data) {
+    setNote(state, data) {
       state.note = data
     },
   },
@@ -55,9 +55,17 @@ export default new Vuex.Store({
 
     async makeNote({ commit, dispatch }, payload) {
       try {
-        let res = await _api.post('bugs/' + payload.bug + "/notes/")
+        let res = await _api.post('bugs/' + payload.bug + "/notes", payload)
         console.log(res)
-        dispatch('getNotes')
+        dispatch('getNotes', payload)
+      } catch (e) { console.error(e) }
+    },
+
+    async getNotes({ commit, dispatch }, payload) {
+      try {
+        let res = await _api.get('bugs/' + payload.bug + "/notes")
+        console.log(res)
+        commit('setNotes', res.data.results)
       } catch (e) { console.error(e) }
     }
   }
