@@ -2,8 +2,8 @@
   <div class="home container-fluid">
     <img alt="Hugs not Bugs" src="../assets/hugs-not-bugs.jpg">
     <h1>Bug Report</h1>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#addABug">Call the
-      Exterminator</button>
+    <!-- <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#addABug">Call the
+      Exterminator</button> -->
     <div class="row">
       <new-bug />
     </div>

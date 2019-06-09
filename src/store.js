@@ -36,7 +36,6 @@ export default new Vuex.Store({
     async getBugs({ commit, dispatch }) {
       try {
         let res = await _api.get('bugs')
-        console.log(res)
         commit('setBugs', res.data.results)
       } catch (e) { console.error(e) }
     },
@@ -49,22 +48,21 @@ export default new Vuex.Store({
 
     async getBugById({ commit, dispatch }, id) {
       let res = await _api.get('bugs/' + id)
-      console.log(res)
       commit('setBug', res.data.results)
     },
 
     async makeNote({ commit, dispatch }, payload) {
       try {
+        debugger
         let res = await _api.post('bugs/' + payload.bug + "/notes", payload)
         console.log(res)
-        dispatch('getNotes', payload)
+        dispatch('getNotes', payload.bug)
       } catch (e) { console.error(e) }
     },
 
     async getNotes({ commit, dispatch }, payload) {
       try {
-        let res = await _api.get('bugs/' + payload.bug + "/notes")
-        console.log(res)
+        let res = await _api.get('bugs/' + payload + "/notes")
         commit('setNotes', res.data.results)
       } catch (e) { console.error(e) }
     }

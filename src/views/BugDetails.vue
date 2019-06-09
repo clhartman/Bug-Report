@@ -1,5 +1,6 @@
 <template>
   <div class="bug-details container-fluid">
+    <h1>Bug Details</h1>
     <div class="card text-center bug">
       <div class="card-header">
         {{bug.closed ? 'Exterminated' : 'Alive'}}
@@ -8,19 +9,20 @@
         <h5 class="card-title">{{bug.title}}</h5>
         <p class="card-text">{{bug.description}}</p>
         <button class="btn btn-primary">Add Note</button>
-        <button class="btn btn-primary">Edit Bug</button>
+        <!-- bug killed button shows up when all notes are either deleted or completed -->
+        <button class="btn btn-primary" @click="bug.closed == true">Bug Killed</button>
       </div>
       <div class="card-footer text-muted">
         Created {{new Date(bug.createdAt).toLocaleDateString()}} by {{bug.creator}}
       </div>
     </div>
-    <form @submit.prevent="makeNote" class="note-form">
+    <notes />
+    <!-- <form @submit.prevent="makeNote" class="note-form">
       <input type="text" placeholder="Author" v-model="newNote.creator" name="creator">
       <input type="text" placeholder="Update" v-model="newNote.content" name="content">
       <input type="text" placeholder="Status" v-model="newNote.flagged">
       <button type="submit">Submit</button>
-    </form>
-    <notes />
+    </form> -->
 
   </div>
 </template>
@@ -38,26 +40,26 @@
     },
     data() {
       return {
-        newNote: {
-          creator: "",
-          flagged: "",
-          content: "",
-          bug: this.id
-        },
+        // newNote: {
+        //   creator: "",
+        //   flagged: "",
+        //   content: "",
+        //   bug: this.id
+        // },
       }
     },
     computed: {
       bug() {
         return this.$store.state.bug
       },
-      // notes() {
-      //   return this.$store.state.notes
-      // }
+      notes() {
+        return this.$store.state.notes
+      }
     },
     methods: {
-      async makeNote() {
-        this.$store.dispatch('makeNote', this.newNote)
-      },
+      // async makeNote() {
+      //   this.$store.dispatch('makeNote', this.newNote)
+      // },
     },
     components: {
       Notes,
