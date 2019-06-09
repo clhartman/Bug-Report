@@ -13,6 +13,8 @@ export default new Vuex.Store({
   state: {
     bugs: [],
     bug: {},
+    note: {},
+    notes: [],
   },
 
   mutations: {
@@ -21,6 +23,12 @@ export default new Vuex.Store({
     },
     setBug(state, data) {
       state.bug = data
+    },
+    getNotes(state, data) {
+      state.notes = data
+    },
+    getNote(state, data) {
+      state.note = data
     },
   },
 
@@ -44,6 +52,14 @@ export default new Vuex.Store({
       console.log(res)
       commit('setBug', res.data.results)
     },
+
+    async makeNote({ commit, dispatch }, payload) {
+      try {
+        let res = await _api.post('bugs/' + payload.bug + "/notes/")
+        console.log(res)
+        dispatch('getNotes')
+      } catch (e) { console.error(e) }
+    }
   }
 })
 
