@@ -3,6 +3,7 @@
     <h1>Bug Details</h1>
     <div class="card text-center bug">
       <div class="card-header">
+        <!-- any way to push back to home once bug.closed = true? and then disable the details button? -->
         {{bug.closed ? 'Exterminated' : 'Alive'}}
       </div>
       <div class="card-body">
