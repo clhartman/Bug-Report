@@ -9,21 +9,14 @@
       <div class="card-body">
         <h5 class="card-title">{{bug.title}}</h5>
         <p class="card-text">{{bug.description}}</p>
-        <button class="btn btn-primary">Add Note</button>
         <!-- bug killed button shows up when all notes are either deleted or completed -->
-        <button class="btn btn-primary" @click="bug.closed == true">Bug Killed</button>
+        <button class="btn btn-primary" @click="closeBug(bug)" :disabled="bug.closed">Bug Killed</button>
       </div>
       <div class="card-footer text-muted">
         Created {{new Date(bug.createdAt).toLocaleDateString()}} by {{bug.creator}}
       </div>
     </div>
     <notes />
-    <!-- <form @submit.prevent="makeNote" class="note-form">
-      <input type="text" placeholder="Author" v-model="newNote.creator" name="creator">
-      <input type="text" placeholder="Update" v-model="newNote.content" name="content">
-      <input type="text" placeholder="Status" v-model="newNote.flagged">
-      <button type="submit">Submit</button>
-    </form> -->
 
   </div>
 </template>
@@ -36,8 +29,9 @@
     name: "BugDetails",
     props: ["id"],
     mounted() {
-      this.$store.dispatch('getBugById', this.id);
-      this.$store.dispatch('getNotes', this.id);
+      this.$store.dispatch('getBugById', this.$route.params.id);
+      console.log(this.$route.params.id)
+      this.$store.dispatch('getNotes', this.$route.params.id);
     },
     data() {
       return {
@@ -58,9 +52,9 @@
       }
     },
     methods: {
-      // async makeNote() {
-      //   this.$store.dispatch('makeNote', this.newNote)
-      // },
+      closeBug(bug) {
+        this.$store.dispatch('closeBug', bug)
+      },
     },
     components: {
       Notes,

@@ -53,9 +53,7 @@ export default new Vuex.Store({
 
     async makeNote({ commit, dispatch }, payload) {
       try {
-        debugger
         let res = await _api.post('bugs/' + payload.bug + "/notes", payload)
-        console.log(res)
         dispatch('getNotes', payload.bug)
       } catch (e) { console.error(e) }
     },
@@ -69,7 +67,6 @@ export default new Vuex.Store({
 
     async editNote({ commit, dispatch }, payload) {
       try {
-        debugger
         let res = await _api.put('bugs/' + payload.bug + '/notes/' + payload._id, payload)
         console.log(res)
         dispatch('getNotes', payload.bug)
@@ -81,6 +78,15 @@ export default new Vuex.Store({
         let res = await _api.delete('bugs/' + payload.bug + '/notes/' + payload._id, payload)
         console.log(res)
         dispatch('getNotes', payload.bug)
+      } catch (e) { console.error(e) }
+    },
+
+    async closeBug({ commit, dispatch }, payload) {
+      try {
+        let res = await _api.delete('bugs/' + payload._id)
+        router.push({ name: 'home' })
+        console.log(payload)
+        dispatch('getBugs')
       } catch (e) { console.error(e) }
     },
   }

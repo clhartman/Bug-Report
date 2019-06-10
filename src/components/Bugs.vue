@@ -16,7 +16,8 @@
           <td>{{bug.description}}</td>
           <td>{{new Date(bug.createdAt).toLocaleDateString()}}</td>
           <td>
-            <router-link class="btn btn-primary" :to="{ name: 'bug', params: {id: bug._id}}">Bug Details</router-link>
+            <router-link class="btn btn-primary" v-show="!bug.closed" :to="{ name: 'bug', params: {id: bug._id}}">Bug
+              Details</router-link>
           </td>
           <td>{{bug.closed ? 'Exterminated' : 'Alive'}}</td>
         </tr>

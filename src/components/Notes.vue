@@ -2,9 +2,9 @@
   <div>
     <div class="new-note">
       <form @submit.prevent="makeNote" class="note-form">
-        <input type="text" placeholder="Author" v-model="newNote.creator" name="creator">
-        <input type="text" placeholder="Create a Note" v-model="newNote.content" name="content">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <input type="text" placeholder="Author" v-model="newNote.creator" name="creator" :disabled="bug.closed">
+        <input type="text" placeholder="Create a Note" v-model="newNote.content" name="content" :disabled="bug.closed">
+        <button type="submit" class="btn btn-primary" :disabled="bug.closed">Submit</button>
       </form>
     </div>
     <table class=" table table-hover">
@@ -23,9 +23,9 @@
           <td>{{note.content}}</td>
           <td>{{new Date(note.createdAt).toLocaleDateString()}}</td>
           <td>{{note.flagged}}</td>
-          <button class="btn btn-success" @click="editNote('completed')">Completed</button>
-          <button class="btn btn-danger" @click="deleteNote('rejected')"
-            v-show="notes.flagged !== 'completed'">Delete</button>
+          <button class="btn btn-success" @click="editNote(note,'completed')" :disabled="bug.closed">Completed</button>
+          <button class="btn btn-danger" @click="deleteNote(note, 'rejected')" v-show="notes.flagged !== 'completed'"
+            :disabled="bug.closed">Delete</button>
         </tr>
       </tbody>
     </table>
@@ -41,9 +41,9 @@
       return {
         newNote: {
           creator: "",
-          flagged: "",
+          flagged: "pending",
           content: "",
-          bug: this.id
+          bug: this.$route.params.id
         },
       }
     },
@@ -62,14 +62,14 @@
       async makeNote() {
         this.$store.dispatch('makeNote', this.newNote)
       },
-      editNote(flagStatus) {
-        this.note.flagged = flagStatus
-        this.$store.dispatch('editNote', this.note)
+      async editNote(note, flagStatus) {
+        note.flagged = flagStatus
+        this.$store.dispatch('editNote', note)
       },
 
-      deleteNote(flagStatus) {
-        this.note.flagged = flagStatus
-        this.$store.dispatch('deleteNote', this.note)
+      async deleteNote(note, flagStatus) {
+        note.flagged = flagStatus
+        this.$store.dispatch('deleteNote', note)
       },
 
     },
