@@ -22,7 +22,10 @@
           <td>{{note.creator}}</td>
           <td>{{note.content}}</td>
           <td>{{new Date(note.createdAt).toLocaleDateString()}}</td>
-          <div class="dropdown">
+          <button class="btn btn-success" @click="editNote('completed')">Completed</button>
+          <button class="btn btn-danger" @click="deleteNote('rejected')"
+            v-show="notes.flagged !== 'completed'">Delete</button>
+          <!-- <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
               data-toggle="dropdown">
               Update Status
@@ -32,13 +35,10 @@
               <p class="dropdown-item" @click="deleteNote('rejected')">Delete Note</p>
               <p class="dropdown-item" @click="editNote('completed')">Note is Completed</p>
             </div>
-          </div>
+          </div> -->
           <!-- should switch to completed when dropdown is selected -->
-          <td>Pending</td>
-          <td>
-            <!-- <router-link class=" btn btn-primary" :to="{ name: 'note', params: {id: note._id}}">Note Status
+          <!-- <router-link class=" btn btn-primary" :to="{ name: 'note', params: {id: note._id}}">Note Status
         </router-link> -->
-          </td>
           <!-- <td>{{note.closed ? 'Exterminated' : 'Alive'}}</td> -->
         </tr>
       </tbody>
@@ -51,14 +51,6 @@
   export default {
     name: "Notes",
     props: ["id"],
-    computed: {
-      notes() {
-        return this.$store.state.notes
-      },
-      bug() {
-        return this.$store.state.bug
-      },
-    },
     data() {
       return {
         newNote: {
@@ -69,6 +61,14 @@
         },
       }
     },
+    computed: {
+      notes() {
+        return this.$store.state.notes
+      },
+      bug() {
+        return this.$store.state.bug
+      },
+    },
     methods: {
       selectNote(id) {
 
@@ -76,6 +76,16 @@
       async makeNote() {
         this.$store.dispatch('makeNote', this.newNote)
       },
+      editNote(flagStatus) {
+        this.note.flagged = flagStatus
+        this.$store.dispatch('editNote', this.note)
+      },
+
+      deleteNote(flagStatus) {
+        this.note.flagged = flagStatus
+        this.$store.dispatch('deleteNote', this.note)
+      },
+
     },
     components: {
     }
