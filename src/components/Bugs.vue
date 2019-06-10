@@ -2,7 +2,7 @@
   <div class="col-12">
     <table class="table table-hover">
       <thead>
-        <tr>
+        <tr class="table-header">
           <th scope="col">Bug Name</th>
           <th scope="col">Description</th>
           <th scope="col">Date Created</th>
@@ -50,4 +50,7 @@
 </script>
 
 <style>
+  .table-header {
+    /* background-color: #fec8fa; */
+  }
 </style>

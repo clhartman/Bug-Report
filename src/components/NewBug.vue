@@ -1,5 +1,5 @@
 <template>
-  <div class="new-bug">
+  <div class="new-bug col-12">
     <div class="row">
       <form @submit.prevent="makeBug" class="new-form">
         <div class="col-6">

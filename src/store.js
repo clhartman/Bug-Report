@@ -91,7 +91,3 @@ export default new Vuex.Store({
     },
   }
 })
-
-// async getGameById({ commit, dispatch }, id) {
-//   let res = await _api.get('games/' + id)
-//   commit('setGame', res.data)
